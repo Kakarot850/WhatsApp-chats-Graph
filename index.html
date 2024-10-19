@@ -9,9 +9,22 @@
     <body>
         <div class="container">
             <div class="date-nav">
-                <select id="year-dropdown"></select>
-                <select id="month-dropdown"></select>
-
+                <div class="top-nav">
+                    <input type="file" id="file-input" accept=".txt" placeholder="something"/>
+                    <label for="file-input" title="Upload file">Upload FIle</label>
+                </div>
+                <div class="middle-nav">
+                    <select id="year-dropdown" title="Select year"></select>
+                    <select id="month-dropdown" title="Select month"></select>
+                </div>
+                <div class="bottom-nav">
+                    <select name="chart-type" id="chart-type" title="Select chart type">
+                        <option value="bar">Bar</option>
+                        <option value="line">Line</option>
+                        <option value="pie">Pie</option>
+                        <option value="bubble">Bubble</option>
+                    </select>
+                </div>
             </div>
             <div class="chart-container">
                 <canvas id="myChart"></canvas>

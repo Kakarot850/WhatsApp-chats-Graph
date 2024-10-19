@@ -1,16 +1,17 @@
 let filteredData;
 let file_path = "chat.txt";
-file_path =  "chatSachin.txt";
+
 // using fetch
-async function fetchData() {
-    const response = await fetch(file_path);
-    const data = await response.text();
-    return data;
-}
+// async function fetchData() {
+//     const response = await fetch(file_path);
+//     const data = await response.text();
+//     return data;
+// }
 
 
 // Data here is the text from the    whatsapp_messges.txt   file
-async function filterData(data) {
+// Add "async" keyword if using fetch
+function filterData(data) {
     const regexp = /\d{2}\/\d{2}\/\d{2}, \d{1,2}:\d{2}.*/g;
     const array = [...data.matchAll(regexp)];
     let modifieddata = {}
@@ -497,5 +498,8 @@ async function filterData(data) {
     return modifieddata;
 }
 
-filteredData = await fetchData().then(data => filterData(data));
-export { filteredData };
+// filteredData = await fetchData().then(data => filterData(data));
+
+
+
+export { filterData };

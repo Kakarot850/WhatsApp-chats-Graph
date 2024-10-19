@@ -1,44 +1,13 @@
-import {filteredData} from './data_filter.js';
+import {filterData} from './data_filter.js';
+import sample_data from './sample_data.js';
 
-let years = Object.keys(filteredData);
-
-//Creating Year Dropdown
+const chatfile = document.getElementById("file-input");
 const yearDropdown = document.getElementById("year-dropdown");
-years.forEach(year => {
-    const option = document.createElement("option");
-    option.value = year;
-    option.textContent = year;
-    yearDropdown.appendChild(option);
-});
-
-//Creating Month Dropdown
 const monthDropdown = document.getElementById("month-dropdown");
-const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
-months.forEach(month => {
-    const option = document.createElement("option");
-    option.value = month;
-    option.textContent = month.charAt(0).toUpperCase() + month.slice(1);
-    monthDropdown.appendChild(option);
-});
+const chartType = document.getElementById("chart-type");
 
-//Event Listener for Year Dropdown
-yearDropdown.addEventListener("change", (e) => {
-    const year = e.target.value;
-    createYearChart(year);
-});
-
-//Event Listener for Month Dropdown
-monthDropdown.addEventListener("change", (e) => {
-    const year = yearDropdown.value;
-    const month = e.target.value;
-    createMonthChart(year, month);
-});
-
-
-
-
-
-
+let filteredData = sample_data;
+let years = Object.keys(filteredData);
 
 
 //Creating Chart
@@ -62,17 +31,112 @@ const data = {
     ],
 }
 const config = {
-    type: "bar",
+    type: chartType.value,
     data,
     options: {
+        responsive: true,
         scales: {
             y: {
                 beginAtZero: true,
             },
+            x: {
+                ticks: {
+                    stepSize: 1, // Add step size for y-axis
+                },
+            }
+        },
+        tooltips: {
+            enabled: true,
         },
     },
 };
 const myChart = new Chart(ctx, config);
+
+
+
+chatfile.addEventListener("change", (e) => {
+    console.log("File Uploaded");
+    yearDropdown.innerHTML = "";
+    monthDropdown.innerHTML = "";
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const content = e.target.result;
+        filteredData = filterData(content);
+        years = Object.keys(filteredData);
+        console.log(years);
+        render();
+        
+    }
+    reader.readAsText(file);
+});
+
+
+function render() {
+    years.forEach(year => {
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = year;
+        yearDropdown.appendChild(option);
+    });
+
+    let months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+    months = months.map(month => month.charAt(0).toUpperCase() + month.slice(1));
+    months.forEach(month => {
+        const option = document.createElement("option");
+        option.value = month;
+        option.textContent = month;
+        monthDropdown.appendChild(option);
+    });
+    createYearChart(years[0]);
+}
+
+
+function loadYearChart(year) { 
+    pass;
+}
+
+
+render();
+
+chartType.addEventListener("change", (e) => {
+    myChart.config.type = e.target.value;
+    myChart.update();
+});
+
+
+//Event Listener for Year Dropdown
+yearDropdown.addEventListener("change", (e) => {
+    const year = e.target.value;
+    createYearChart(year);
+});
+yearDropdown.addEventListener("dblclick", (e) => {
+    const year = e.target.value;
+    createYearChart(year);
+});
+
+
+//Event Listener for Month Dropdown
+monthDropdown.addEventListener("change", (e) => {
+    const year = yearDropdown.value;
+    const month = e.target.value;
+    createMonthChart(year, month);
+});
+monthDropdown.addEventListener("dblclick", (e) => {
+    const year = yearDropdown.value;
+    const month = e.target.value;
+    createMonthChart(year, month);
+});
+
+
+
+const chartTypes = ["line", "bar", "radar", "doughnut", "polarArea", "bubble", "scatter"];
+
+
+
+
+
+
 
 // Chart with Months as labels and no of messages as data
 function createYearChart(year) {
@@ -115,7 +179,7 @@ function createMonthChart(year, month) {
     }
 
     
-    console.log(days_messages);
+    // console.log(days_messages);
     myChart.config.data.datasets[0].label = `${month} ${year}`;
     myChart.config.data.datasets[0].data.length = 0;
     myChart.config.data.labels.length = 0;

@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border: none !important;
 }
 
 body {
@@ -21,13 +22,84 @@ body {
 
 .date-nav{
     border: 1px solid red;
+    background-color: #151515;
     display: flex;
     flex-basis: 20%;
     flex-direction: column;
-    justify-content: start;
+    justify-content: space-evenly;
     align-items: center;
+    padding: 0 10px;
     color: white;
+    box-shadow: 5px 0 0 1px rgba(21, 21, 21, 0.2);
 }
+
+.top-nav, .middle-nav , .bottom-nav{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type='file']{
+    display: none;
+}
+
+.top-nav label{
+    background-color: #696868cf;
+    color: white;
+    border: 1px solid red;
+    border-radius: 20px;
+    padding: 10px 15px;
+    cursor: pointer;
+    text-align: center;
+    letter-spacing: 1.2px;
+    -webkit-user-select: none;
+    user-select: none;
+    /* box-shadow: 5px 15px 25px rgba(0, 0, 0, 0.35); */
+}
+
+
+
+
+label, select{
+    background-color: #696868a5;
+    color: white;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s linear; 
+}
+
+label:hover, select:hover{
+    background-color: #696868;
+    transform: scale(1.05);
+}
+
+select:active{
+    transform: scale(1.05);
+}
+
+select:focus{
+    /* background-color: #696868cf; */
+    outline: none;
+    transform: scale(1.05);
+}
+
+option{
+    background-color: #1d1d1d;
+    color: white;
+    border: 1px solid red;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    height: 50%;
+}
+
+select::-webkit-scrollbar{
+    display: none;
+}
+
 
 .chart-container {
     flex-basis: 100%;
