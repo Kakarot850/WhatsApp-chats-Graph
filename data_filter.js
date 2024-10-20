@@ -14,6 +14,10 @@ let file_path = "chat.txt";
 function filterData(data) {
     const regexp = /\d{2}\/\d{2}\/\d{2}, \d{1,2}:\d{2}.*/g;
     const array = [...data.matchAll(regexp)];
+    if (array.length === 0) { 
+        alert("No data found in the file,\nPlease upload a valid WhatsApp chat file");
+        return 0;
+    }
     let modifieddata = {}
     array.forEach((line, index) => {
     let date = line[0].substring(0, 8); // Extract date in DD-MM-YY format
